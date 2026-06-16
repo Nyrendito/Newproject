@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glowup — Paywall Seam Mockup</title>
+<style>
+  :root{
+    --bg:#0e0f13;
+    --panel:#16181f;
+    --panel-2:#1d2029;
+    --line:#262a35;
+    --text:#f4f5f7;
+    --muted:#9aa0ad;
+    --accent:#6ee7a8;       /* fresh, gender-neutral mint */
+    --accent-dim:#2f6b50;
+    --warn:#ffb86b;
+    --bad:#ff7a85;
+    --gold:#ffd479;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 800px at 20% -10%, #1b1f2b 0%, #0b0c10 55%, #08090c 100%);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;
+    padding:48px 20px 60px;
+  }
+  .head{text-align:center;margin-bottom:36px;max-width:760px;}
+  .head h1{font-size:24px;font-weight:700;letter-spacing:-.4px;}
+  .head p{color:var(--muted);font-size:14.5px;margin-top:8px;line-height:1.5;}
+  .stage{
+    display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start;
+  }
+  .col{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .tag{
+    font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .tag.free{color:var(--accent);}
+  .tag.paid{color:var(--gold);}
+
+  /* phone */
+  .phone{
+    width:320px;height:680px;border-radius:44px;
+    background:linear-gradient(#0c0d11,#0a0b0e);
+    border:1px solid #20232c;
+    box-shadow:0 30px 80px rgba(0,0,0,.55), inset 0 0 0 6px #050608;
+    padding:14px;position:relative;overflow:hidden;
+  }
+  .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);
+    width:120px;height:26px;background:#050608;border-radius:0 0 16px 16px;z-index:5;}
+  .screen{
+    width:100%;height:100%;border-radius:32px;overflow:hidden;
+    background:var(--bg);position:relative;
+    display:flex;flex-direction:column;
+  }
+  .statusbar{display:flex;justify-content:space-between;align-items:center;
+    padding:14px 22px 6px;font-size:12px;color:var(--muted);font-weight:600;}
+  .content{flex:1;overflow:hidden;padding:6px 20px 18px;display:flex;flex-direction:column;}
+
+  /* ---------- SCREEN 1 : FREE RESULT ---------- */
+  .brandrow{display:flex;align-items:center;gap:8px;margin:4px 0 14px;}
+  .logo{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--accent),#3aa6ff);}
+  .brandrow b{font-size:15px;letter-spacing:-.2px;}
+  .brandrow span{margin-left:auto;font-size:12px;color:var(--muted);}
+
+  .scoreWrap{display:flex;flex-direction:column;align-items:center;margin:6px 0 4px;}
+  .ring{
+    width:172px;height:172px;border-radius:50%;
+    background:
+      radial-gradient(closest-side, #14161d 79%, transparent 80% 100%),
+      conic-gradient(var(--accent) 0 61%, #23262f 61% 100%);
+    display:flex;align-items:center;justify-content:center;position:relative;
+    box-shadow:0 0 40px rgba(110,231,168,.12);
+  }
+  .ring .num{font-size:50px;font-weight:800;letter-spacing:-1.5px;line-height:1;}
+  .ring .den{font-size:13px;color:var(--muted);margin-top:4px;}
+  .ring .inner{display:flex;flex-direction:column;align-items:center;}
+  .scoreLabel{margin-top:12px;font-size:13.5px;color:var(--muted);text-align:center;}
+  .scoreLabel b{color:var(--text);font-weight:600;}
+
+  .concernHead{display:flex;align-items:baseline;justify-content:space-between;margin:18px 2px 10px;}
+  .concernHead h3{font-size:14.5px;font-weight:700;}
+  .concernHead small{font-size:12px;color:var(--muted);}
+
+  .clist{display:flex;flex-direction:column;gap:9px;}
+  .citem{
+    display:flex;align-items:center;gap:11px;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:11px 13px;
+  }
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .citem .name{font-size:13.5px;font-weight:600;}
+  .citem .sev{margin-left:auto;font-size:11.5px;color:var(--muted);
+    background:var(--panel-2);padding:3px 9px;border-radius:20px;}
+
+  .cta{
+    margin-top:auto;padding-top:14px;
+  }
+  .cta .hint{font-size:11.5px;color:var(--muted);text-align:center;margin-bottom:9px;}
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--accent);color:#06281a;font-weight:700;font-size:15px;
+    border-radius:16px;padding:15px;width:100%;border:none;
+    box-shadow:0 10px 30px rgba(110,231,168,.25);
+  }
+  .lockicon{font-size:14px;}
+
+  /* ---------- SCREEN 2 : PAYWALL ---------- */
+  .pw{display:flex;flex-direction:column;height:100%;}
+  .pw .close{align-self:flex-start;color:var(--muted);font-size:20px;margin:2px 0 4px;}
+  .pw h2{font-size:23px;font-weight:800;letter-spacing:-.5px;line-height:1.18;margin-top:6px;}
+  .pw h2 .hl{color:var(--accent);}
+  .pw .sub{color:var(--muted);font-size:13px;margin-top:8px;line-height:1.5;}
+
+  .preview{
+    margin:16px 0 4px;border:1px solid var(--line);border-radius:16px;
+    background:var(--panel);padding:13px 14px;position:relative;overflow:hidden;
+  }
+  .preview .blurline{display:flex;align-items:center;gap:10px;margin:7px 0;}
+  .preview .pdot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;}
+  .preview .bar{height:11px;border-radius:6px;background:linear-gradient(90deg,#2b2f3a,#222530);}
+  .b1{width:70%}.b2{width:84%}.b3{width:58%}.b4{width:76%}
+  .preview .veil{
+    position:absolute;inset:0;backdrop-filter:blur(3px);
+    background:linear-gradient(180deg, rgba(22,24,31,.1), rgba(14,15,19,.85));
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px;
+  }
+  .preview .veil span{font-size:12px;color:var(--text);font-weight:600;
+    background:rgba(8,9,12,.7);padding:6px 12px;border-radius:20px;border:1px solid var(--line);}
+
+  .benefits{list-style:none;margin:16px 0 4px;display:flex;flex-direction:column;gap:11px;}
+  .benefits li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;line-height:1.35;}
+  .check{color:var(--accent);font-weight:800;flex:none;margin-top:1px;}
+
+  .plans{margin-top:auto;display:flex;flex-direction:column;gap:10px;}
+  .plan{
+    border:1px solid var(--line);border-radius:16px;padding:13px 15px;
+    display:flex;align-items:center;gap:12px;background:var(--panel);
+  }
+  .plan.sel{border-color:var(--accent);background:rgba(110,231,168,.06);
+    box-shadow:0 0 0 1px var(--accent) inset;}
+  .radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);flex:none;}
+  .plan.sel .radio{border-color:var(--accent);background:
+    radial-gradient(closest-side,var(--accent) 55%,transparent 56%);}
+  .plan .pt{font-size:13.5px;font-weight:700;}
+  .plan .ps{font-size:11.5px;color:var(--muted);margin-top:2px;}
+  .plan .price{margin-left:auto;text-align:right;}
+  .plan .price b{font-size:14px;}
+  .plan .price small{display:block;font-size:10.5px;color:var(--muted);}
+  .best{font-size:9.5px;font-weight:800;letter-spacing:.5px;color:#06281a;
+    background:var(--accent);padding:2px 7px;border-radius:7px;margin-left:6px;}
+
+  .paybtn{
+    background:var(--accent);color:#06281a;font-weight:800;font-size:15.5px;
+    border:none;border-radius:16px;padding:16px;margin-top:4px;
+    box-shadow:0 12px 30px rgba(110,231,168,.28);
+  }
+  .fineprint{font-size:10px;color:var(--muted);text-align:center;margin-top:9px;line-height:1.45;}
+
+  .legend{max-width:720px;margin-top:40px;color:var(--muted);font-size:12.5px;line-height:1.7;text-align:center;}
+  .legend b{color:var(--text);}
+  @media(max-width:720px){ .stage{gap:28px} }
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>The paywall seam — free proof → locked fix</h1>
+    <p>Left: what they see <b>free</b> after scanning (score + named concerns = proof it works, plus the itch).
+       Right: the <b>hard paywall</b> that unlocks the routine + products. The wall sits between “here’s what’s wrong” and “here’s what fixes it.”</p>
+  </div>
+
+  <div class="stage">
+
+    <!-- ============ SCREEN 1 : FREE RESULT ============ -->
+    <div class="col">
+      <div class="tag free">① Free · the hook</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="statusbar"><span>9:41</span><span>●●● ⌃ ▮</span></div>
+          <div class="content">
+            <div class="brandrow">
+              <div class="logo"></div><b>Lumen</b><span>Scan complete</span>
+            </div>
+
+            <div class="scoreWrap">
+              <div class="ring">
+                <div class="inner">
+                  <div class="num">61</div>
+                  <div class="den">/ 100</div>
+                </div>
+              </div>
+              <div class="scoreLabel">Your skin score · <b>Room to glow</b><br>Top 38% start lower — yours climbs fast</div>
+            </div>
+
+            <div class="concernHead">
+              <h3>We detected 4 things</h3>
+              <small>on your skin</small>
+            </div>
+            <div class="clist">
+              <div class="citem"><span class="dot" style="background:var(--bad)"></span><span class="name">Dehydration</span><span class="sev">Moderate</span></div>
+              <div class="citem"><span class="dot" style="background:var(--warn)"></span><span class="name">Uneven texture</span><span class="sev">Mild</span></div>
+              <div class="citem"><span class="dot" style="background:var(--warn)"></span><span class="name">Redness · nose & cheeks</span><span class="sev">Mild</span></div>
+              <div class="citem"><span class="dot" style="background:var(--gold)"></span><span class="name">Early dark spots</span><span class="sev">Early</span></div>
+            </div>
+
+            <div class="cta">
+              <div class="hint">Your fix is ready — routine + exact products</div>
+              <button class="btn"><span class="lockicon">🔒</span> See what fixes this</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tag">Steps 1–2: photo + “what’s wrong” = free</div>
+    </div>
+
+    <!-- ============ SCREEN 2 : PAYWALL ============ -->
+    <div class="col">
+      <div class="tag paid">② Hard paywall · the fix</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="statusbar"><span>9:41</span><span>●●● ⌃ ▮</span></div>
+          <div class="content">
+            <div class="pw">
+              <div class="close">✕</div>
+              <h2>Unlock your <span class="hl">glowup plan</span></h2>
+              <div class="sub">Your full breakdown, the exact products that fix your 4 concerns, and a daily routine that moves your score.</div>
+
+              <div class="preview">
+                <div class="blurline"><span class="pdot"></span><div class="bar b1"></div></div>
+                <div class="blurline"><span class="pdot"></span><div class="bar b2"></div></div>
+                <div class="blurline"><span class="pdot"></span><div class="bar b3"></div></div>
+                <div class="blurline"><span class="pdot"></span><div class="bar b4"></div></div>
+                <div class="veil"><span>🔒 Your routine &amp; products</span></div>
+              </div>
+
+              <ul class="benefits">
+                <li><span class="check">✓</span> The exact products for <b>your</b> skin — with cheaper picks too</li>
+                <li><span class="check">✓</span> A daily routine + reminders to stay on track</li>
+                <li><span class="check">✓</span> Re-scan anytime to watch your score climb</li>
+              </ul>
+
+              <div class="plans">
+                <div class="plan sel">
+                  <div class="radio"></div>
+                  <div><div class="pt">Yearly <span class="best">BEST VALUE</span></div><div class="ps">3-day free trial, then billed yearly</div></div>
+                  <div class="price"><b>$29.99</b><small>$0.58 / wk</small></div>
+                </div>
+                <div class="plan">
+                  <div class="radio"></div>
+                  <div><div class="pt">Weekly</div><div class="ps">Cancel anytime</div></div>
+                  <div class="price"><b>$4.99</b><small>per week</small></div>
+                </div>
+              </div>
+
+              <button class="paybtn">Start my glowup →</button>
+              <div class="fineprint">3-day free trial, then $29.99/yr. Cancel anytime in Settings.<br>We may earn a commission on products — and we’ll always show you cheaper options.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tag">Step 3: products + routine + score = paid</div>
+    </div>
+
+  </div>
+
+  <div class="legend">
+    <b>Why this converts:</b> they’ve seen the score + their real concerns (proof it works), they feel the problem,
+    and the fix is one tap away — peak willingness to pay. <b>The disclosed-affiliate line</b> in the fine print is what
+    keeps trust intact while you still earn on products. <b>Re-scan</b> lives inside the paid plan and only ever moves the
+    score — it never re-shuffles the products.
+  </div>
+</body>
+</html>
