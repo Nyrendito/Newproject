@@ -10,26 +10,24 @@ Based on Andrej Karpathy's "LLM Council" idea.
 
 ## Install
 
-Copy the skill into your skills directory:
+The skill lives in `.claude/skills/llm-council`, so **any new Claude Code
+session in this repo loads it automatically — no install step**.
+
+To make it available across all your projects, also copy it to the user-level
+skills directory:
 
 ```bash
-# Project-level (this repo's Claude Code sessions)
-mkdir -p .claude/skills
-cp -r skills/llm-council .claude/skills/
-
-# Or user-level (all your projects)
 mkdir -p ~/.claude/skills
-cp -r skills/llm-council ~/.claude/skills/
+cp -r .claude/skills/llm-council ~/.claude/skills/
 ```
 
-Restart Claude Code (or start a new session) and it will auto-load. The skill
-triggers when you bring a real decision with stakes — e.g. "should I launch
-this?", "poke holes in this plan", "talk me out of this pivot".
+The skill triggers when you bring a real decision with stakes — e.g. "should I
+launch this?", "poke holes in this plan", "talk me out of this pivot".
 
 ## Files
 
 ```
-skills/llm-council/
+.claude/skills/llm-council/
 ├── SKILL.md                 # entry point: when to convene + the 5-step process
 └── references/
     └── advisors.md          # the five advisor persona briefs
