@@ -1,3 +1,21 @@
+# Claude Code skills
+
+This repo is a small collection of Claude Code skills. Any skill under
+`.claude/skills/` loads automatically in a new session in this repo.
+
+- **[llm-council](.claude/skills/llm-council)** — stress-test a real decision
+  through five clashing AI advisors (below).
+- **[flirting](.claude/skills/flirting)** — flirt like a charming, specific human
+  instead of a cringe pickup-line bot. Triggers when you ask for help with a
+  dating-app opener, a reply to a crush, banter, reviving a dead chat, or asking
+  someone out. Grounded in the actual mechanics of attraction (specificity,
+  playful teasing/push-pull, leaving room to volley, reading signals) with hard
+  rules against the usual AI slop — canned "rizz lines", generic compliments,
+  emoji spam, and interview-mode questions. Respect and consent are
+  non-negotiable; it declines harassment/manipulation.
+
+---
+
 # LLM Council — a Claude Code skill
 
 Stop your AI from being a yes-man. The **LLM Council** runs a decision through
